@@ -4,6 +4,8 @@ An open-source wireless and wired game controller for **Aquarius** and **Aquariu
 ## Overview
 The **Aq+ Gamepad** is a modern game controller for **Aquarius** and **Aquarius+** 8-bit Z80-based computers. It features either wired or wireless connectivity, and perfectly emulates the original **Aquarius Hand Controller** in a form-factor that is more comfortable and fun to use.
 
+![](https://github.com/1stage/aqplus-controller/blob/main/case/images/Aq%2B%20Gamepad%20Prototype%20Beauty%20Shot.png)
+
 ## Features
 - Quick pairing and consistent connection to **Aquarius+** systems
 - Comfortable design for extended use
