@@ -131,7 +131,7 @@
         "min_track_width": 0.0,
         "min_via_annular_width": 0.1,
         "min_via_diameter": 0.4,
-        "solder_mask_to_copper_clearance": 0.0,
+        "solder_mask_to_copper_clearance": 0.005,
         "use_height_for_length_calcs": true
       },
       "teardrop_options": [
@@ -239,7 +239,13 @@
     "equivalence_files": []
   },
   "erc": {
-    "erc_exclusions": [],
+    "erc_exclusions": [
+      "pin_to_pin|2108200|1371600|126dc68f-696c-4c06-8fd5-b84449e0dbd9|f581fa48-b5bd-4f6a-912b-3800c15375bb|/5ab575d5-ec51-4b96-ae68-3c4ee2e3d92b|/5ab575d5-ec51-4b96-ae68-3c4ee2e3d92b|/5ab575d5-ec51-4b96-ae68-3c4ee2e3d92b",
+      "pin_to_pin|2171700|1397000|126dc68f-696c-4c06-8fd5-b84449e0dbd9|f581fa48-b5bd-4f6a-912b-3800c15375bb|/5ab575d5-ec51-4b96-ae68-3c4ee2e3d92b|/5ab575d5-ec51-4b96-ae68-3c4ee2e3d92b|/5ab575d5-ec51-4b96-ae68-3c4ee2e3d92b",
+      "power_pin_not_driven|1981200|901700|ae8f1acc-fcef-4ff2-b47d-fd7c0a4312c7|00000000-0000-0000-0000-000000000000|/5ab575d5-ec51-4b96-ae68-3c4ee2e3d92b|/5ab575d5-ec51-4b96-ae68-3c4ee2e3d92b|",
+      "power_pin_not_driven|2374900|342900|29c0e3b7-2d3d-4dd5-ad2a-f1877c1d8460|00000000-0000-0000-0000-000000000000|/5ab575d5-ec51-4b96-ae68-3c4ee2e3d92b|/5ab575d5-ec51-4b96-ae68-3c4ee2e3d92b|",
+      "power_pin_not_driven|647700|266700|d81e6191-0573-493c-841a-a8a07665b714|00000000-0000-0000-0000-000000000000|/5ab575d5-ec51-4b96-ae68-3c4ee2e3d92b|/5ab575d5-ec51-4b96-ae68-3c4ee2e3d92b|"
+    ],
     "meta": {
       "version": 0
     },
@@ -439,7 +445,7 @@
       "no_connect_dangling": "warning",
       "pin_not_connected": "error",
       "pin_not_driven": "error",
-      "pin_to_pin": "warning",
+      "pin_to_pin": "error",
       "power_pin_not_driven": "error",
       "similar_labels": "warning",
       "simulation_model_issue": "ignore",
@@ -518,11 +524,7 @@
       },
       {
         "netclass": "Power",
-        "pattern": "BATT-"
-      },
-      {
-        "netclass": "Power",
-        "pattern": "BATT+"
+        "pattern": "*BATT*"
       }
     ]
   },
@@ -542,7 +544,7 @@
   },
   "schematic": {
     "annotate_start_num": 0,
-    "bom_export_filename": "ESP32-S3-DevKitC-1 BOM.csv",
+    "bom_export_filename": "aqp_controller_BOM.csv",
     "bom_fmt_presets": [],
     "bom_fmt_settings": {
       "field_delimiter": ",",
@@ -632,7 +634,7 @@
       }
     ],
     "bom_settings": {
-      "exclude_dnp": false,
+      "exclude_dnp": true,
       "fields_ordered": [
         {
           "group_by": false,
@@ -698,6 +700,108 @@
           "group_by": false,
           "label": "Description",
           "name": "Description",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Availability",
+          "name": "Availability",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "MANUFACTURER",
+          "name": "MANUFACTURER",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "MAXIMUM_PACKAGE_HEIGHT",
+          "name": "MAXIMUM_PACKAGE_HEIGHT",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "MF",
+          "name": "MF",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "MP",
+          "name": "MP",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "PARTREV",
+          "name": "PARTREV",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Package",
+          "name": "Package",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Price",
+          "name": "Price",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "SNAPEDA_PN",
+          "name": "SNAPEDA_PN",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "STANDARD",
+          "name": "STANDARD",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Sim.Device",
+          "name": "Sim.Device",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Sim.Pins",
+          "name": "Sim.Pins",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "SnapEDA_Link",
+          "name": "SnapEDA_Link",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Check_prices",
+          "name": "Check_prices",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Description_1",
+          "name": "Description_1",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "JLCPCB Part Num",
+          "name": "JLCPCB Part Num",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "JLCPCB Alt Part Num",
+          "name": "JLCPCB Alt Part Num",
           "show": false
         }
       ],
