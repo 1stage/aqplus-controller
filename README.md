@@ -28,3 +28,5 @@ The **Aq+ Gamepad** is a modern game controller for **Aquarius** and **Aquarius+
 - Wireless Connection
   - **Aquarius+ Standard Edition**
   - **Aquarius+ Mini / Mini vZ**
+
+See the [**Aq+ Gamepad Wiki**](https://github.com/1stage/aqplus-controller/wiki) for full details.
