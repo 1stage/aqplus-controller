@@ -16,222 +16,23 @@ computers. It features either wired (Mini/Micro/MX expander required for origina
 or wireless (Aquarius+) connectivity, and emulates the original Aquarius hand controller in
 a form-factor that is more comfortable and fun to use.
 
-The system was developed using an ESP32-S3-DevKitC module as the microcontroller and BLE 
-(Bluetooth Low Energy) as the wireless solution. It is configured using the Arduino Core, 
-and uses the "ESP32-S3-Box" board profile. Additionally, BLE connectivity is coded using 
-the ESP32-BLE-Gamepad library, which itself relies on the NimBLE-Arduino library. The RGB 
-LED serves as a system status indicator and uses the Adafruit NeoPixel library. All libraries 
-can be loaded through the Arduino Library Manager. The system also features a LiPo 
-(lithium polymer) battery, with smart charging.
-
-The system uses the Preferences library to save in non-volatile storage (NVS) the settings
-specific to the individual device, such as X, Y, & battery trim settings, serial number,
-unit name, etc. These settings will get removed if the Tools > Erase All Flash Before Sketch
-Upload option is enabled. So ensure that it is shown as DISABLED.
-
---------------------------------------------------------------------------------------------
-Features:
 --------------------------------------------------------------------------------------------
 
-Quick pairing with Aquarius+ systems:
-  0.  You should be on Aquarius+ OS V1.2 or later
-  1.  Turn on Aquarius+ and activate Bluetooth
-    - CTRL+TAB to bring up Settings overlay
-    - Arrow key down to ESP Settings and hit ENTER
-    - Arrow key to Bluetooth and hit ENTER
-    - Arrow key to ON/OFF and toggle to ON with ENTER
-  2.  Turn on Aq+ Gamepad OR plug into power via USB Micro port:
-    - The main LED on the Aq+ Gamepad should be on and have a CYAN (aqua) color
-    - The charging light (RED) may also be on
-  3.  In the Aquarius+ Settings overlay:
-    - Arrow down to "Aq+ Gamepad" in the Found Devices section
-    - Hit ENTER, and give it a unique name to identify it, and hit ENTER again
-    - The main LED on the Aq+ Gamepad should turn to BLUE color
-    - The new Aq+ Gamepad should be listed by this unique name in the Connected Devices section
-  4.  Hit ESCAPE key until the Settings overlay goes away
-  5.  Your Aq+ Gamepad is now mapped to Hand Controller 1
-    - If you add another Aq+ Gamepad after, it will map to Hand Controller 2
-
-Ability to toggle DPAD (8 direction thumbstick) or Analog mode (16 direction thumbstick):
-  1.  With the Aq+ Gamepad turned on (CYAN or BLUE LED), press and hold (in this order):
-    - Thumbstick button (push in on thumbstick until it clicks)
-    - Button 6 (upper right button, regardless of mapping)
-    - Guide button (center button)
-    - Let go of all buttons
-  2.  Main LED will flash YELLOW (switching to DPAD mode) or MAGENTA (switching to Analog mode) 3 times
-    - Aq+ will reset (takes about 2-3 seconds)
-    - The main light will turn CYAN (aqua) and then BLUE (if paired to Aquarius+)
-
-    - Analog mode:            U
-                          UUL   UUR
-                        UL         UR
-                      LUL           RUR
-                     L        +        R
-                      LDL           RDR
-                        DL         DR
-                          DDL   DDR
-                              D
-                              
-    - DPAD mode:              U
-                                    
-                        UL         UR
-                                       
-                     L        +        R
-                                       
-                        DL         DR
-                                    
-                              D
-                              
-
-Ability to swap button rows (1 2 3) and (4 5 6) [Version 0.4.0 or later]:
-  0.  By default, button row (4 5 6) is closest to the lower right "wing" of the Aq+ Gamepad
-  1.  With the Aq+ Gamepad turned on (CYAN or BLUE LED), press and hold (in this order):
-    - Thumbstick button (push in on thumbstick until it clicks)
-    - Button 5 (upper middle button, regardless of mapping)
-    - Guide button (center button)
-    - Let go of all buttons
-  2.  Main LED will flash GREEN (switching to NOT SWAPPED mode) or RED (switching to SWAPPED mode) 4 times
-    - Aq+ will reset (takes about 2-3 seconds)
-    - The main light will turn CYAN (aqua) and then BLUE (if paired to Aquarius+)
-
-    - SWAPPED mode (default):    (1)  (2)  (3)
-                                  (4) (5) (6)
-
-    - NOT SWAPPED mode:          (4)  (5)  (6)
-                                  (1) (2) (3)
-
---------------------------------------------------------------------------------------------
-Troubleshooting:
---------------------------------------------------------------------------------------------
-
-Aq+ Gamepad Won't Reconnect via Bluetooth: 
-  If the Aquarius+ computer is power cycled (turned off and then on), or if it's ESP32 is reset (CTRL+SHIFT+ESC)
-  while an Aq+ Gamepad is connected, the Aq+ Gamepad's main LED will remain BLUE, thinking it is still connected, 
-  even though the connection has been broken. This leaves the Aq+ Gamepad in a state where the unit can't be 
-  reconnected to. To fix:
-  - Make sure the USB micro charging cable is not attached to the Aq+ Gamepad
-  - Power cycle the Aq+ Gamepad using the switch on the back while the Aquarius+ computer is on and Bluetooth is enabled
-  - The unit's main LED should start out CYAN and then turn BLUE
-  - It should show up in the Overlay setting menu as a Connected device
-
-Aq+ Gamepad Doesn't Control the Overlay Menu:
-  The first Aq+ Gamepad that is connected via Bluetooth to the Aquarius+ at start up is assigned to 
-  Hand Controller slot 1, and can be used to navigate the Overlay settings menu:
-  - First, enable the Allow Gamepad navigation setting option in the Overlay menu
-  - Second, the Aq+ Gamepad must be turned on, paired, and connected to the Aquarius+ as the FIRST
-    controller attached
-  - Third, if you've swapped button rows (1 2 3) <> (4 5 6), your Activate (Button 4) and Back (Button 5)
-    will now be on the other row of buttons
-  - Finally, the Aq+ Gamepad must be in DPAD mode rather than Analog mode to navigate up and down
-    the Overlay menu list
-
-Aq+ Gamepad Thumbstick is Generating a Direction Even When Centered:
-  The Aq+ Gamepad uses a standard thumbstick component with two potentiometers that register 0 - ~5226 on both the
-  X and Y axis, usually with a value of ~2613 as the middle range. While a small "dead zone" has been created in the
-  center to compensate for this and create stability when at rest, it doesn't always block out values that are
-  just beyond it. This is because while the thumbstick components are MOSTLY the same, they are not rigorously
-  tested or calibrated, as they are commodity items. As such, the X and Y values have to be trimmed to better center
-  the stick. To reset or calibrate the Aq+ Gamepad:
-  - Connect the Aq+ Gamepad to a computer configured to communicate via serial terminal (i.e. Arduino IDE Serial Monitor)
-  - Within the terminal window, type ? and ENTER to see the available menu of commands
-  - Run a diagnostic by typing D and ENTER. If in any of the 10 rows the following conditions are true, 
-    an auto-trim is needed:
-    - The second column (dataOut) shows anything other than b100000000
-    - Either the fourth (rawX) or seventh (rawY) columns show values that are below 2560 or above 2660
-  - Run auto-trim by typing T and ENTER. The system will auto-trim the X & Y values.
-
-Aq+ Gamepad Battery Never Shows as Fully Charged OR Over-Charged:
-  The battery management circuitry on the Aq+ Gamepad ensures that an approved LiPo battery pack will charge safely
-  and consistently. As such, while the reporting of the battery level may be a bit off, the circuit itself is
-  managing it correctly. Simlar to the way in which the X and Y values for the thumbstick are reported based on
-  electrical values on those sense pins, the battery is subject to the same fluctuations. Two preferences are
-  saved within the Aq+ Gamepad, a maximum battery value that saves the top end range of the analog value output from the
-  battery (managed by the battery management circuit), and a battery trim value that can be used to better update 
-  the "perceived" top end of the battery to normalize to 100% when charging has stopped (no RED charging light).
-  - For proper calibration of the battery level, the battery must be fully charged:
-    - A battery that is not fully charged will have a red light glowing when it is plugged in via USB micro to
-      either a computer or a power source
-    - A battery that is fully charged will NOT have a red light glowing when it is plugged in
-  - Connect the Aq+ Gamepad to a computer configured to communicate via serial terminal (i.e. Arduino IDE Serial Monitor)
-  - Within the terminal window, type ? and ENTER to see the available menu of commands
-  - Run a diagnostic by typing D and ENTER. If the tenth column (rawBatt) in any of the 10 rows show values that are 
-    below 2560 or above 2660, a calibration is needed.
-  - Run auto-set max battery level by typing M and ENTER. The system will auto-adjust the max battery value.
-
-Terminal Isn't Working:
-  The Aq+ Gamepad can be connected to a computer via USB so that it can be monitored, calibrated, or updated.
-  - To do so, the following configuration should be used (see Links & References section below):
-    - Arduino IDE
-    - esp32 by Espressif System, 3.1.1 or later (use Boards Manager)
-      - The board should be set to 'ESP32-S3-Box"
-      - Also installs drivers and the ESPTool programmer
-    - Arduino libraries (for firmware updates; use Library Manager):
-      - ESP32-BLE-Gamepad by lemmingDev, 0.7.3 or later
-        - Also installs NimBLE-Arduino,  2.2.1 or later
-      - Adafruit NeoPixel by Adafruit,  1.12.4 or later
-  - The correct communications port must be selected within the terminal settings, and the proper protocols
-    should be set within the Serial Monitor:
-    - Baud rate should be 115200
-    - Line endings should be ONLY Newline
-
---------------------------------------------------------------------------------------------
-To-Do List:
---------------------------------------------------------------------------------------------
-
- - Web/GUI interface for prefs & settings
- - Test for & recover from Bluetooth "slave" disconnections (Aq+ power cycle, Aq+ ESP32 reset)
-
---------------------------------------------------------------------------------------------
-Revisions:
---------------------------------------------------------------------------------------------
-
-0.4.0, 24 FEB 2025 -  Added toggle to SWAP button rows (1 2 3) <> (4 5 6)
-                      Created terminal menu via USB serial for stats and prefs changes
-0.3.0, 22 FEB 2025 -  Incorporated Preferences for NVS data, and removed SettingsManagerESP32 
-                      Added toggle between Analog Thumb and DPAD/HAT
-0.2.2, 21 FEB 2025 -  Fixed XY dead zone issues
-                      Commented legacy code
-                      Turned all main loop processes into funtions
-                      Created TRIM variables for thumb stick
-0.2.1, 18 FEB 2025 -  Fixed NeoPixel error (logging was too verbose)
-0.2.0, 12 FEB 2025 -  Added 1+3+5 wired chord to AQ button
-0.1.9, 03 DEC 2024 -  Created state machine for LED/Battery
-0.1.8, 30 NOV 2024 -  Remapped GPIO pin assignments after PCB rework
-0.1.7, 19 NOV 2024 -  Added SettingsManagerESP32 to save persistent variables
-0.1.6, 17 NOV 2024 -  Added battery divider sense pin
-0.1.5, 17 NOV 2024 -  Switched to GPIO rather than Shift Register
-0.1.4, 16 NOV 2024 -  Reworked analog angle calculations from Aq+ ESP32 code
-                      Created buttonByte and thumbByte to combine into dataByte
-0.1.3, 11 NOV 2024 -  Shift register implemented for wired connections
-                      Turn button components into arrays and loop
-0.1.2, 09 NOV 2024 -  Button alignment with Xbox mappings
-                      Thumbstick scaling fixed
-                      Buttons transitioned to single-pin (from matrix)
-0.1.1, 08 NOV 2024 -  Button matrix (unsuccessful)
-0.1.0, 07 NOV 2024 -  Initial version, using Gamepad example (four buttons)
-                      Installed Arduino bootloader
-                      Identified compatible Board profile (ESP32-S3-Box)
-
---------------------------------------------------------------------------------------------
-Links & References:
---------------------------------------------------------------------------------------------
-
-AQP Gamepad GitHub: https://github.com/1stage/aqplus-controller
-Arduino IDE: https://www.arduino.cc/en/software
-ESP32-BLE-Gamepad: https://github.com/lemmingDev/ESP32-BLE-Gamepad
-Adafruit NeoPixel: https://github.com/adafruit/Adafruit_NeoPixel
-NimBLE Arduino: https://github.com/h2zero/NimBLE-Arduino
-ESP32-S3_DevKitC: https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s3/esp32-s3-devkitc-1/index.html
+For more information, see the included Docs.ino file.
 
 */
 
+// Libraries
 #include <Arduino.h>
 #include <Adafruit_NeoPixel.h>
 #include <BleGamepad.h>
 #include <BleGamepadConfiguration.h>
 #include <math.h>
 #include <Preferences.h>
+
+// Supporting project files
 #include <Unit_Settings.ino>
+#include <Docs.ino>
 
 #define BUTTONPIN_1 5   // ESP32 GPIO pin Aq+ physical button 1 is attached to
 #define BUTTONPIN_2 6   // ESP32 GPIO pin Aq+ physicalbutton 2 is attached to
@@ -537,14 +338,14 @@ void setup() {
   // aqgp_prefs.putUInt("xtrim", 70);         /* XTrim value to align X pot to ~2613      */
   // aqgp_prefs.putUInt("ytrim", 97);         /* YTrim value to align Y pot to ~2613      */
   // aqgp_prefs.putUInt("battmax", 3273);     /* Value to align battery value to 100      */
-  // aqgp_prefs.putUInt("dpadon", 0);         /* Toggle for saved DPAD state              */
+  // aqgp_prefs.putUInt("dpadon", 1);         /* Toggle for saved DPAD state              */
   // aqgp_prefs.putUInt("browswapon", 1);     /* Toggle for saved row swap state          */
 
   // Get the X & Y trim and battmax uint values; if the key does not exist, return a default value (second parameter)
   XTrim      = aqgp_prefs.getUInt("xtrim", 0);
   YTrim      = aqgp_prefs.getUInt("ytrim", 0);
   battMax    = aqgp_prefs.getUInt("battmax", 3250);
-  dpadON     = aqgp_prefs.getUInt("dpadon", 0);
+  dpadON     = aqgp_prefs.getUInt("dpadon", 1);
   bRowSwapON = aqgp_prefs.getUInt("browswapon", 1);
 
   // Publish AQP Gamepad config.
@@ -686,6 +487,7 @@ void serialEvent() {
 }
 
 bool parseCommand(String thisCommand) {
+  // Normalize entered commands to upper case for easier processing
   thisCommand.toUpperCase();
   // Help
   if ((thisCommand == "?\n") | (thisCommand == "H\n")) {
@@ -717,6 +519,17 @@ bool parseCommand(String thisCommand) {
       delay(250);
     }
     Serial.println();
+    return true;
+  }
+  // Show DPAD & Button Swap Settings
+  if (thisCommand == "L\n") {
+    Serial.println("Layout Settings:");
+    Serial.print("     dpadON = ");
+    Serial.println(dpadON);
+    Serial.print(" bRowSwapON = ");
+    Serial.println(bRowSwapON);
+    Serial.println();
+    showLayout();
     return true;
   }
   // Auto-set Max Battery level
@@ -784,6 +597,7 @@ void printHelp() {
   Serial.println("  B  - Toggle button rows (1 2 3) <> (4 5 6)");
   Serial.println("  C  - Show configuration data");
   Serial.println("  D  - Show debug data x10, once every 1/4 second");
+  Serial.println("  L  - Show current DPAD & Button Row settings");
   Serial.println("  M  - Auto-set max battery level (only when charge light is off)");
   Serial.println("  P  - Show preferences data");
   Serial.println("  R  - Reset X & Y trim to 0");
@@ -937,6 +751,29 @@ void debugOut() {
   Serial.print(bRowSwapON);
   Serial.print(" : bcState=");              // Combined battery + connection status integer: (battery state * 10) + connection state
   Serial.println(battConState[1]);
+}
+
+// Display current configuration of DPAD and Button Row Swap on RGB LED
+void showLayout() {
+  if (dpadON) {
+    theLED = YELLOW;
+    updateNeoPixel();
+  } else {
+    theLED = MAGENTA;
+    updateNeoPixel();
+  }
+  delay(1500);
+  if (bRowSwapON) {
+    theLED = GREEN;
+    updateNeoPixel();
+  } else {
+    theLED = RED;
+    updateNeoPixel();
+  }
+  delay(1500);
+  theLED = BLACK;
+  updateNeoPixel();
+
 }
 
 // Toggle DPAD <> Analog state
