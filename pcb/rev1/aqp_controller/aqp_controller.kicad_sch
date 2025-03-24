@@ -10913,7 +10913,7 @@
 			)
 		)
 	)
-	(global_label "DATAPIN_G"
+	(global_label "DATAPIN_8"
 		(shape input)
 		(at 40.64 107.95 180)
 		(fields_autoplaced yes)
@@ -10925,7 +10925,7 @@
 		)
 		(uuid "9d86d653-177b-4530-b9e0-9e0a5d36e23b")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 27.7971 107.95 0)
+			(at 27.8576 107.95 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11353,7 +11353,7 @@
 			)
 		)
 	)
-	(global_label "DATAPIN_G"
+	(global_label "DATAPIN_8"
 		(shape output)
 		(at 83.82 80.01 0)
 		(fields_autoplaced yes)
@@ -11365,7 +11365,7 @@
 		)
 		(uuid "f1dac67f-8b2c-49ea-b963-f8d9acfea7c5")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 96.6629 80.01 0)
+			(at 96.6024 80.01 0)
 			(effects
 				(font
 					(size 1.27 1.27)

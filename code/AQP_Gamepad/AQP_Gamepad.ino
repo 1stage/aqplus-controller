@@ -59,6 +59,7 @@ For more information, see the included Docs.ino file.
 #define DATAPIN_5 41    // Wired data out pin 5
 #define DATAPIN_6 42    // Wired data out pin 6
 #define DATAPIN_7 17    // Wired data out pin 7
+#define DATAPIN_8 47    // Wired data out pin 8
 
 // Create a NeoPixel object to control RGB LED
 Adafruit_NeoPixel pixels(NUMPIX, RGBPIN, NEO_GRB + NEO_KHZ800);
@@ -118,14 +119,15 @@ int battConState[2] = { 1, 1 };
 int thumbState[2]   = { 0, 0 };
 
 // Create a data pin array for wired output.
-int dataPins[8] = { DATAPIN_0,
+int dataPins[9] = { DATAPIN_0,
                     DATAPIN_1,
                     DATAPIN_2,
                     DATAPIN_3,
                     DATAPIN_4,
                     DATAPIN_5,
                     DATAPIN_6,
-                    DATAPIN_7 };
+                    DATAPIN_7,
+                    DATAPIN_8 };
 
 // Create an array mapping between Aquarius buttons and BLE Gamepad buttons in a SWAPPED configuration.
 // buttonPinMap[button_num][Aq+ Button Pin, BLE Gamepad button]
@@ -356,16 +358,22 @@ void setup() {
   aqpGamepadConfig.setHardwareRevision(AQGP_HWRV);
 
   // Set all GPIO button pins [x][0] to INPUT_PULLUP
-  // and all wired output dataPins[x] to OUTPUT.
   for (int i = 0; i < 8; i++) {
     if (bRowSwapON) {                             /* Row Swap ON */
       pinMode(buttonPinMap[i][0], INPUT_PULLUP);
-      pinMode(dataPins[i], OUTPUT);
     } else {                                      /* Row Swap not on */
       pinMode(buttonPinMapNS[i][0], INPUT_PULLUP);
-      pinMode(dataPins[i], OUTPUT);
     }
   }
+
+  // Set all wired output dataPins[x] to OUTPUT.
+  for (int i = 0; i < 8; i++) {
+    pinMode(dataPins[i], OUTPUT);
+  }
+
+  // Set datapin[9] as OUTPUT and LOW (GND)
+  pinMode(dataPins[9], OUTPUT);
+  digitalWrite(dataPins[9], LOW);
 
   // Set the battery level sensor to input (analog).
   pinMode(BATTDIV, INPUT);

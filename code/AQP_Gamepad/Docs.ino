@@ -7,7 +7,7 @@ sph@1stage.com
 aquarius.1stage.com
 --------------------------------------------------------------------------------------------
 
-Updated 26 Feb 2025
+Updated 24 Mar 2025
 
 --------------------------------------------------------------------------------------------
 Overview:
@@ -42,6 +42,7 @@ To-Do List:
 Revisions:
 --------------------------------------------------------------------------------------------
 
+0.6.0, 24 MAR 2025 -  Added DB9 Pin 1 as DATAPIN_8 (previously GND) to GPIO 47 to allow total flexibility of unit
 0.5.0, 26 FEB 2025 -  Added DPAD & Button Row Swap status check
 0.4.0, 24 FEB 2025 -  Added toggle to SWAP button rows (1 2 3) <> (4 5 6)
                       Created terminal menu via USB serial for stats and prefs changes
