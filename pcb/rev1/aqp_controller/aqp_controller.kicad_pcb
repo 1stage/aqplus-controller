@@ -19679,7 +19679,7 @@
 			(justify mirror)
 		)
 	)
-	(gr_text "DG"
+	(gr_text "D8"
 		(at 91.675 85.675 0)
 		(layer "B.SilkS")
 		(uuid "94ce8fee-7b1b-496c-8c9c-b2a9a4ca2d49")
@@ -20230,7 +20230,7 @@
 			(justify bottom)
 		)
 	)
-	(gr_text "DG"
+	(gr_text "D8"
 		(locked yes)
 		(at 82.1 85.635 0)
 		(layer "F.SilkS")
